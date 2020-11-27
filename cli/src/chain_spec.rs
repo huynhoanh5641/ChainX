@@ -256,141 +256,54 @@ pub fn mainnet_config() -> Result<ChainXChainSpec, String> {
     ChainXChainSpec::from_json_bytes(&include_bytes!("./res/chainx.json")[..])
 }
 
-#[allow(unused)]
-pub fn mainnet_config_raw() -> Result<ChainXChainSpec, String> {
+pub fn testnet_config() -> Result<ChainXChainSpec, String> {
     let wasm_binary =
         chainx::WASM_BINARY.ok_or("Development wasm binary not available".to_string())?;
 
-    // 5HNeqQYeyqcaBTHHjSbFnEvhCeg6jKcRrV2zeHgXQhvjK8XY
+    // 5EWtScne4zWsGaP4gVo8DmLpChVx3MzoQTpKJCEdBTYDA1Dy
     let root_key: AccountId =
-        hex!["eadd6992f5b27027c9424be83d460fcd71550aa8ba3c322ff25548565ca6395d"].into();
+        hex!["6c707b1690a6b0e01b5dea252fe1887930a5afc0ec203f96705331749c37ae4a"].into();
 
-    // 5E9upTw5KfKuVa9nA5E9sfiC3S6pToZmm5NKkdWnfaArA1zD
+    // 5HGZzRCfvLM7LSdkPZF5SzD4tj9BKvCTQuGkJd1jedrcCKFc
     let vesting_key: AccountId =
-        hex!["5c70f62d9ac4bc0a314100d5d3b74d127dbcf8628329ffa799361ae69e104768"].into();
+        hex!["e639a1a8ff3bd1fe15faa922ef2b772b9ee1c8d9cdc63ad36af12ab5ca155d4a"].into();
 
-    // export SECRET="YOUR SECRET"
-    // cd scripts/genesis/generate_keys.sh && bash generate_keys.sh
-
-    let initial_authorities: Vec<AuthorityKeysTuple> = vec![
+    let initial_authorities: Vec<AuthorityKeysTuple> = vec![(
         (
-            (
-                // 5DPgEmPRBhXj8fpsHm3aXrNtjXNVv7MHnUYQVLFhzMyzabaN
-                hex!["3ab47230dff92003f6f4f79cf7930cfe3f3fd77eedfea55acfde77223ac1a47a"].into(),
-                b"Validator1".to_vec(),
-            ),
-            // 5EPgwcbLknydnWGmHem3rmwhdjk55e9HfoqjF5A5zRQDkWxj
-            hex!["66f30ce2de3f23c2383c0ecea1e2a2e0520c18931d3a9bca64be78e3f9f7b62f"]
-                .unchecked_into(),
-            // 5FTYv429Xnkmn7HR4FCWPxnTpvveqpqjVKng3H6ypaBpXeVN
-            hex!["96213e8f2f57edfec52b6ffc260d4e8257e8addabe7797fa197f0aa8f6b7e748"]
-                .unchecked_into(),
-            // 5G4KNiQahHTY1LSafhfZnwGLtAnB39TMuc9nhpWMerE98RYQ
-            hex!["b0a540b56805d5b14df2787360728d72197bec577601ad49e274d3914f8b407a"]
-                .unchecked_into(),
-            // 5HNR82T2juJY6hx48ExdwUBQcpHQvHc5QPCcEzusdHMtLfMZ
-            hex!["eaaf3faeb72a15004fb5f9c68de188310b8cf3fbbbd8e8eb4db8aa9e95c40966"]
-                .unchecked_into(),
+            // 5EvXt55kDmAXbBPqrzvNZcbE6bvZ8eWBThxJptoDkwAAyEkw
+            hex!["7e7927d030d89585cd66f0d44313de41f4c697da387159786f8b3ed5cd081d4f"].into(),
+            b"Validator5".to_vec(),
         ),
-        (
-            (
-                // 5HmRZ2viuTVEcxD1DgF89DvnHptVsqYyN27DvPwiSMUoiFhB
-                hex!["fc3b583310fe9f091e35a8be64ac9508b9d3c088fdcef51b747113fa8fe87f44"].into(),
-                b"Validator2".to_vec(),
-            ),
-            // 5FLeZHeNy7UPyNusqLRT4EUqxBxUVEpSbma6u9By6DzC3o13
-            hex!["90dd84e695fd85888d9060ded9a79a7b6bca69206cf10d5366f10c12822c9424"]
-                .unchecked_into(),
-            // 5Hi3u6dHDtemnL18s6gr6CduTbXEFJg4Jx4LX5YWVc4HAwnC
-            hex!["f9a8b6d66d3efbd77b304feea7c142b801cd04422e250d548f063750c890ff1a"]
-                .unchecked_into(),
-            // 5FbwQEszvNLmcJzbVaSGUccLpri3waR49xFD6Zt3fNd48wqF
-            hex!["9c86e6f5ac9ef21d27500d3bfdc9900c17911a4dba1a29ccd32268c208d6c24f"]
-                .unchecked_into(),
-            // 5ENpkyLe4xNRz1siYybtQnhEfvgJc6zsb2Go5dZLHTSdGZNt
-            hex!["664a1e1eccab98fb1f7c1b20c16b1f010ed5a1ec13648b6c57f336ebb44d865a"]
-                .unchecked_into(),
-        ),
-        (
-            (
-                // 5FEMghsWkqKi8wR7r95jPg6DnGErv9w7AfZF7nMkjUqHy421
-                hex!["8c114008f432dd0f10dc74a78d1f6cdef6778bb30c3d5abfcf60f5f1570a6b43"].into(),
-                b"Validator3".to_vec(),
-            ),
-            // 5Grs98EMvxsCrmKMKGCx3xemYcMhAPNF8aa6uRYttWVKJLBg
-            hex!["d4257968d6f6775c356c9bac1fcce8d420cd1e03e704dc5c4c5c33b0182c471a"]
-                .unchecked_into(),
-            // 5EaDXXayhSHc49gXk7i7frh8tFwmtWAL2Sb9zjtaGhBCbNib
-            hex!["6efa76335d099850aa2ef10a15f20e9d305f7eec9b0079f8196c7aa9deff07ed"]
-                .unchecked_into(),
-            // 5GBQRvZ4FXZi1ttKCMHQN99X4qtegoQ3aRAyqjxyKuRZ8qnX
-            hex!["b60cfd05f854c298b4fdaac6d1b2d58e94f870ce0ce3f98d1863e56479d19776"]
-                .unchecked_into(),
-            // 5CB4Smxj5szwZGr1n1ebzEW4HHu8aPqndiZ2oAZGXdDnLFsK
-            hex!["04d8c72b0f7cfe7ce77da151a4b3f6d68295f4740cd4f0ce00d1d197d4758e42"]
-                .unchecked_into(),
-        ),
-        (
-            (
-                // 5EhdQUJkAcaBMmDpAmc2vMhLoRTjUxHgbXmsun7CSawXu6To
-                hex!["74a18faa6693cf68b988c479799b9e5fff4c131beb055acdab30c11570df0978"].into(),
-                b"Validator4".to_vec(),
-            ),
-            // 5CJPSYjvaCi2M7izUXwg5pqkQqhaJiHgDX9gz1JoKQrY18jo
-            hex!["0a6f713ac4f6773b688be912174a67b6e708386dc2466391c5ba23037ce69951"]
-                .unchecked_into(),
-            // 5EoaYFrxhUBpvUh1u4EqBRbXkAEZ7mnn45tqz93fvGz3mFxd
-            hex!["792b62f72b315be07d5ba5b1492ec2010b69612e03ea89635448eefa0aaff722"]
-                .unchecked_into(),
-            // 5Cr1Jnhp8p3BQfez9GxZkMaMemPb6PpaqbqkwWWdcwj7W3Qc
-            hex!["228cc94abf939b2e38dc932fb87e970fdcdb04b906e29ccf2669ef7cda56836a"]
-                .unchecked_into(),
-            // 5DNpp5jtdht5JBBUoUtFc46YrgBLeJwP5QyLtQ6fGyii4nkV
-            hex!["3a0e10920f8f5f1880d25a1b9d04ce936d64c4a84060428133347cc1c83e8a64"]
-                .unchecked_into(),
-        ),
-        (
-            (
-                // 5EvXt55kDmAXbBPqrzvNZcbE6bvZ8eWBThxJptoDkwAAyEkw
-                hex!["7e7927d030d89585cd66f0d44313de41f4c697da387159786f8b3ed5cd081d4f"].into(),
-                b"Validator5".to_vec(),
-            ),
-            // 5D83WrH4h4rPFxe4m4xGMuC8XuR9jqWHggHBriZQELJ3JneN
-            hex!["2ec8253a23695069619df42213106402cffb217bb02c653c11e3435eb047e60d"]
-                .unchecked_into(),
-            // 5GpHoku58fumTfn9pQZxKFxASvMw6JNTqmFDQw92g7LV1gwj
-            hex!["d22ec57d5cdb6f80f0df82590f9999b88e936e9f8c93d9c05cd87dba1b4567ae"]
-                .unchecked_into(),
-            // 5HCBmPYr7AsXDp4VLu7qh6HRExjy2Nx33YLHqLeQ6i7yFjHt
-            hex!["e2e1d5c8eb42aa6b37f71cbdc8e73b67b385e7841d98bbaef3492252a4f3e605"]
-                .unchecked_into(),
-            // 5HQYBwyf2787MCMhZNBEpswHJcJnXVVNxjrdTa6cVjUf29jy
-            hex!["ec4d8806b85969a29214c00ae70b5d239dc65daebf2ea4a43fd47a77e16d9c7c"]
-                .unchecked_into(),
-        ),
-    ];
+        // 5D83WrH4h4rPFxe4m4xGMuC8XuR9jqWHggHBriZQELJ3JneN
+        hex!["2ec8253a23695069619df42213106402cffb217bb02c653c11e3435eb047e60d"].unchecked_into(),
+        // 5GpHoku58fumTfn9pQZxKFxASvMw6JNTqmFDQw92g7LV1gwj
+        hex!["d22ec57d5cdb6f80f0df82590f9999b88e936e9f8c93d9c05cd87dba1b4567ae"].unchecked_into(),
+        // 5HCBmPYr7AsXDp4VLu7qh6HRExjy2Nx33YLHqLeQ6i7yFjHt
+        hex!["e2e1d5c8eb42aa6b37f71cbdc8e73b67b385e7841d98bbaef3492252a4f3e605"].unchecked_into(),
+        // 5HQYBwyf2787MCMhZNBEpswHJcJnXVVNxjrdTa6cVjUf29jy
+        hex!["ec4d8806b85969a29214c00ae70b5d239dc65daebf2ea4a43fd47a77e16d9c7c"].unchecked_into(),
+    )];
 
     let constructor = move || {
+        // TODO: use mainnet_genesis() or create a new testnet_genesis()?
         mainnet_genesis(
             &wasm_binary[..],
             initial_authorities.clone(),
             root_key.clone(),
             vesting_key.clone(),
             genesis_assets(),
-            btc_genesis_params(include_str!("res/btc_genesis_params_mainnet.json")),
+            btc_genesis_params(include_str!("res/btc_genesis_params_testnet.json")),
             crate::genesis::bitcoin::mainnet_trustees(),
         )
     };
 
     Ok(ChainXChainSpec::from_genesis(
-        "ChainX CC1",
-        "chainx",
+        "ChainX TC0",
+        "chainx_tc0",
         ChainType::Live,
         constructor,
         bootnodes![
-            "/dns/p2p.1.chainx.org/tcp/20222/p2p/12D3KooWMMGD6eyLDgoTPnmGrawn9gkjtsZGLACJXqVCUbe6R6bD",
-            "/dns/p2p.2.chainx.org/tcp/20222/p2p/12D3KooWC1tFLBFVw47S2nfD7Nzhg5hBMUvsnz4nqpr82zfTYWaH",
-            "/dns/p2p.3.chainx.org/tcp/20222/p2p/12D3KooWPthFY8xDDyM5X9PWZwNfioqP5EShiTKyVv5899H22WBT",
+            "/dns/p2p.3.chainx.org/tcp/20223/p2p/12D3KooWRcmKCa1Uo54UNV6umzvVnWAx7TZNFibbZfP87zqPs1DP",
         ],
         Some(
             TelemetryEndpoints::new(vec![
@@ -399,8 +312,8 @@ pub fn mainnet_config_raw() -> Result<ChainXChainSpec, String> {
             ])
             .expect("ChainX telemetry url is valid; qed"),
         ),
-        Some("pcx"),
-        Some(as_properties(NetworkType::Mainnet)),
+        Some("pcx-tc0"),
+        Some(as_properties(NetworkType::Testnet)),
         Default::default(),
     ))
 }
