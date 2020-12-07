@@ -286,7 +286,7 @@ pub fn testnet_config() -> Result<ChainXChainSpec, String> {
 
     let constructor = move || {
         // TODO: use mainnet_genesis() or create a new testnet_genesis()?
-        mainnet_genesis(
+        testnet_genesis(
             &wasm_binary[..],
             initial_authorities.clone(),
             root_key.clone(),
@@ -515,7 +515,7 @@ fn build_genesis(
     }
 }
 
-fn mainnet_genesis(
+fn testnet_genesis(
     wasm_binary: &[u8],
     initial_authorities: Vec<AuthorityKeysTuple>,
     root_key: AccountId,
@@ -612,7 +612,7 @@ fn mainnet_genesis(
         pallet_indices: Some(chainx::IndicesConfig { indices: vec![] }),
         pallet_sudo: Some(chainx::SudoConfig { key: root_key }),
         xpallet_system: Some(chainx::XSystemConfig {
-            network_props: NetworkType::Mainnet,
+            network_props: NetworkType::Testnet,
         }),
         xpallet_assets_registrar: Some(chainx::XAssetsRegistrarConfig { assets }),
         xpallet_assets: Some(chainx::XAssetsConfig {
